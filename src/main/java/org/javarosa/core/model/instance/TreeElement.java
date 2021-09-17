@@ -344,6 +344,24 @@ import org.javarosa.xpath.expr.XPathStringLiteral;
         return newNode;
     }
 
+    //For #4059
+    public TreeElement deepCopyForRepeat() {
+        System.out.println("4059: deepCopyForRepeat");
+        TreeElement newNode = shallowCopy();
+
+        newNode.children.clear();
+        for (TreeElement child : children) {
+            //Test that multiplicities must be adjusted
+            boolean keepTemplateMultiplicities = false;
+            //#4059
+            if (!keepTemplateMultiplicities) {
+                child.setMult(TreeReference.DEFAULT_MULTIPLICITY);
+            }
+            newNode.addChild(child.deepCopyForRepeat());
+        }
+        return newNode;
+    }
+
     /* ==== MODEL PROPERTIES ==== */
 
     // factoring inheritance rules

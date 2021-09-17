@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
 import org.javarosa.core.log.WrappedException;
 import org.javarosa.core.model.TriggerableDag.EventNotifierAccessor;
 import org.javarosa.core.model.actions.ActionController;
@@ -506,7 +507,11 @@ public class FormDef implements IFormElement, Localizable, Persistable, IMetaDat
         TreeReference repeatContextRef = getChildInstanceRef(index);
         TreeElement template = mainInstance.getTemplate(repeatContextRef);
 
-        mainInstance.copyNode(template, repeatContextRef);
+        //Fix for Collect #4059
+        System.out.println("4059: createNewRepeat");
+        boolean for4059 = false;
+        mainInstance.copyNode(!for4059 ? template : template.deepCopyForRepeat(),
+            repeatContextRef);
 
         TreeElement newNode = mainInstance.resolveReference(repeatContextRef);
         preloadInstance(newNode);
