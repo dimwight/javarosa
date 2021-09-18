@@ -8,6 +8,7 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 
+import static org.javarosa.core.model.FormDef.FOR_4059;
 import static org.javarosa.form.api.FormEntryController.EVENT_PROMPT_NEW_REPEAT;
 import static org.javarosa.test.utils.ResourcePathHelper.r;
 import static org.junit.Assert.assertEquals;
@@ -35,7 +36,7 @@ public class FormNavigationTestCase {
                 ei("twoNestedRegularGroups.xml",
                         "-1, ", "0, ", "0, 0, ", "0, 0, 0, ", "0, 0, 1, ", "-1, "),
 
-                !FormDef.FOR_4059 ?
+                !FOR_4059 ?
                         ei("twoNestedRepeatGroups.xml",
                                 "-1, ", "0_0, ", "0_0, 0_0, ", "0_0, 0_0, 0, ", "0_0, 0_0, 1, ", "0_0, 0_1, ",
                                 "0_0, 0_1, 0, ", "0_0, 0_1, 1, ", "0_0, 0_2, ",
@@ -43,7 +44,7 @@ public class FormNavigationTestCase {
                         : ei("twoNestedRepeatGroups.xml",
                         "-1, ", "0_0, ", "0_0, 0_0, ", "0_0, 0_0, 0, ", "0_0, 0_0, 1, ", "0_0, 0_1, ",
                         "0_0, 0_1, 0, ", "0_0, 0_1, 1, ", "0_0, 0_2, ",
-                        "0_0, 0_2, 0, ", "0_0, 0_2, 1, ", "-1, "),
+                        "0_0, 0_2, 0, ", "0_0, 0_2, 1, ", "0_0, 0_3, ", "0_1, ", "-1, "),
 
                 ei("simpleFormWithThreeQuestions.xml",
                         "-1, ", "0, ", "1, ", "2, ", "-1, ")
@@ -70,7 +71,9 @@ public class FormNavigationTestCase {
     // form and then decreasing until the beginning of the form.
     // Verify the expected indices before and after each operation.
     public void testIndices() {
-        System.out.printf("FNTC %s\n", formName);
+        if (FOR_4059) {
+            System.out.printf("FNTC %s\n", formName);
+        }
         FormParseInit fpi = new FormParseInit(r("navigation/" + formName));
         FormEntryController formEntryController = fpi.getFormEntryController();
         FormEntryModel formEntryModel = fpi.getFormEntryModel();
@@ -85,7 +88,7 @@ public class FormNavigationTestCase {
             }
             formEntryModel.setQuestionIndex(formEntryModel.incrementIndex(formEntryModel.getFormIndex()));
             // check the index again after increasing the index
-            if (formName.contains("twoNestedRepeatGroups")) {
+            if (FOR_4059 && formName.contains("twoNestedRepeatGroups")) {
                 System.out.printf("FNTC %s\n", i + 1);
             }
             assertEquals(expectedIndices[i + 1], formEntryModel.getFormIndex().toString());
