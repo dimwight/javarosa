@@ -1,5 +1,6 @@
 package org.javarosa.form.api;
 
+import org.javarosa.core.model.FormDef;
 import org.javarosa.core.test.FormParseInit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,12 +35,15 @@ public class FormNavigationTestCase {
                 ei("twoNestedRegularGroups.xml",
                         "-1, ", "0, ", "0, 0, ", "0, 0, 0, ", "0, 0, 1, ", "-1, "),
 
-                ei("twoNestedRepeatGroups.xml",
+                !FormDef.FOR_4059 ?
+                        ei("twoNestedRepeatGroups.xml",
+                                "-1, ", "0_0, ", "0_0, 0_0, ", "0_0, 0_0, 0, ", "0_0, 0_0, 1, ", "0_0, 0_1, ",
+                                "0_0, 0_1, 0, ", "0_0, 0_1, 1, ", "0_0, 0_2, ",
+                                "0_1, ", "-1, ")
+                        : ei("twoNestedRepeatGroups.xml",
                         "-1, ", "0_0, ", "0_0, 0_0, ", "0_0, 0_0, 0, ", "0_0, 0_0, 1, ", "0_0, 0_1, ",
                         "0_0, 0_1, 0, ", "0_0, 0_1, 1, ", "0_0, 0_2, ",
-                        //#4059
-                        true ? "0_0, 0_2, 0, " : "0_1, ",
-                        true ? "0_0, 0_2, 1, " : "-1, "),
+                        "0_0, 0_2, 0, ", "0_0, 0_2, 1, ", "-1, "),
 
                 ei("simpleFormWithThreeQuestions.xml",
                         "-1, ", "0, ", "1, ", "2, ", "-1, ")

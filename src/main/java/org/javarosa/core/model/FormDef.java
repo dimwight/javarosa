@@ -503,15 +503,15 @@ public class FormDef implements IFormElement, Localizable, Persistable, IMetaDat
         return newIndex;
     }
 
+    //Flag for Collect #4059 fix
+    public static final boolean FOR_4059 = true;
+
     public void createNewRepeat(FormIndex index) throws InvalidReferenceException {
         TreeReference repeatContextRef = getChildInstanceRef(index);
         TreeElement template = mainInstance.getTemplate(repeatContextRef);
 
-        //Fix for Collect #4059
-//        System.out.println("4059: createNewRepeat");
-        boolean for4059 = true;
-        mainInstance.copyNode(!for4059 ? template : template.deepCopyForRepeat(),
-            repeatContextRef);
+        mainInstance.copyNode(!FOR_4059 ? template : template.deepCopyForRepeat(),
+                repeatContextRef);
 
         TreeElement newNode = mainInstance.resolveReference(repeatContextRef);
         preloadInstance(newNode);
