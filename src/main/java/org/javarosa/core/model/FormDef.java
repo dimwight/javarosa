@@ -509,7 +509,7 @@ public class FormDef implements IFormElement, Localizable, Persistable, IMetaDat
 
         //Fix for Collect #4059
         System.out.println("4059: createNewRepeat");
-        boolean for4059 = false;
+        boolean for4059 = true;
         mainInstance.copyNode(!for4059 ? template : template.deepCopyForRepeat(),
             repeatContextRef);
 

@@ -1831,6 +1831,7 @@ public class TriggerableDagTest {
         scenario.createNewRepeat("/data/outer[1]/inner");
         scenario.createNewRepeat("/data/outer[1]/inner");
 
+        //Regression #4059
         assertThat(scenario.answerOf("/data/outer[0]/inner[0]/count"), is(intAnswer(3)));
         assertThat(scenario.answerOf("/data/outer[0]/inner[1]/count"), is(intAnswer(3)));
         assertThat(scenario.answerOf("/data/outer[0]/inner[2]/count"), is(intAnswer(3)));
