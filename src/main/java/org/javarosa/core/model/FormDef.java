@@ -508,7 +508,7 @@ public class FormDef implements IFormElement, Localizable, Persistable, IMetaDat
         TreeElement template = mainInstance.getTemplate(repeatContextRef);
 
         //Fix for Collect #4059
-        System.out.println("4059: createNewRepeat");
+//        System.out.println("4059: createNewRepeat");
         boolean for4059 = true;
         mainInstance.copyNode(!for4059 ? template : template.deepCopyForRepeat(),
             repeatContextRef);

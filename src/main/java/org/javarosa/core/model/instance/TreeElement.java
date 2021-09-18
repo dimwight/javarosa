@@ -346,7 +346,7 @@ import org.javarosa.xpath.expr.XPathStringLiteral;
 
     //For #4059
     public TreeElement deepCopyForRepeat() {
-        System.out.println("4059: deepCopyForRepeat");
+//        System.out.println("4059: deepCopyForRepeat");
         TreeElement newNode = shallowCopy();
 
         newNode.children.clear();
