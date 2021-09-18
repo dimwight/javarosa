@@ -1,6 +1,5 @@
 package org.javarosa.form.api;
 
-import org.javarosa.core.model.FormDef;
 import org.javarosa.core.test.FormParseInit;
 import org.junit.Test;
 import org.junit.runner.RunWith;

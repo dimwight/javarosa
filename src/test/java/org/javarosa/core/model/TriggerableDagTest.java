@@ -1831,12 +1831,20 @@ public class TriggerableDagTest {
         scenario.createNewRepeat("/data/outer[1]/inner");
         scenario.createNewRepeat("/data/outer[1]/inner");
 
-        //Regression #4059
-        assertThat(scenario.answerOf("/data/outer[0]/inner[0]/count"), is(intAnswer(3)));
-        assertThat(scenario.answerOf("/data/outer[0]/inner[1]/count"), is(intAnswer(3)));
-        assertThat(scenario.answerOf("/data/outer[0]/inner[2]/count"), is(intAnswer(3)));
-        assertThat(scenario.answerOf("/data/outer[1]/inner[0]/count"), is(intAnswer(2)));
-        assertThat(scenario.answerOf("/data/outer[1]/inner[1]/count"), is(intAnswer(2)));
+        if (!FormDef.FOR_4059) {
+            assertThat(scenario.answerOf("/data/outer[0]/inner[0]/count"), is(intAnswer(3)));
+            assertThat(scenario.answerOf("/data/outer[0]/inner[1]/count"), is(intAnswer(3)));
+            assertThat(scenario.answerOf("/data/outer[0]/inner[2]/count"), is(intAnswer(3)));
+            assertThat(scenario.answerOf("/data/outer[1]/inner[0]/count"), is(intAnswer(2)));
+            assertThat(scenario.answerOf("/data/outer[1]/inner[1]/count"), is(intAnswer(2)));
+        } else {
+            //For #4059 fix
+            assertThat(scenario.answerOf("/data/outer[0]/inner[0]/count"), is(intAnswer(4)));
+            assertThat(scenario.answerOf("/data/outer[0]/inner[1]/count"), is(intAnswer(4)));
+            assertThat(scenario.answerOf("/data/outer[0]/inner[2]/count"), is(intAnswer(4)));
+            assertThat(scenario.answerOf("/data/outer[1]/inner[0]/count"), is(intAnswer(3)));
+            assertThat(scenario.answerOf("/data/outer[1]/inner[1]/count"), is(intAnswer(3)));
+        }
     }
 
     @Test
