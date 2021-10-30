@@ -82,7 +82,9 @@ public class FormEntryCaption implements FormElementStateListener {
      * @return longText form
      */
     public String getLongText(){
-        return getQuestionText(getTextID());
+        String textID = getTextID();
+        String questionText = getQuestionText(textID);
+        return questionText;
     }
 
     /**

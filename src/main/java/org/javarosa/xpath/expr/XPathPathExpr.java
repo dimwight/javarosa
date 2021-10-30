@@ -209,7 +209,8 @@ public class XPathPathExpr extends XPathExpression {
     }
 
     public XPathNodeset eval(DataInstance unusedDataInstance, EvaluationContext ec) {
-        return new XPathPathExprEval().eval(getReference(), ec);
+        TreeReference reference = getReference();
+        return new XPathPathExprEval().eval(reference, ec);
     }
 
     public static Object getRefValue(DataInstance model, EvaluationContext ec, TreeReference ref) {

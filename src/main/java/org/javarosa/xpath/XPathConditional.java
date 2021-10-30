@@ -68,7 +68,9 @@ public class XPathConditional implements IConditionExpr {
 
     public Object evalRaw (DataInstance model, EvaluationContext evalContext) {
         try{
-            return XPathFuncExpr.unpack(expr.eval(model, evalContext));
+            Object eval = expr.eval(model, evalContext);
+            Object unpack = XPathFuncExpr.unpack(eval);
+            return unpack;
         } catch(XPathUnsupportedException e){
             if(xpath != null){
                 throw new XPathUnsupportedException(xpath);
@@ -85,7 +87,9 @@ public class XPathConditional implements IConditionExpr {
     }
 
     public String evalReadable (DataInstance model, EvaluationContext evalContext) {
-        return XPathFuncExpr.toString(evalRaw(model, evalContext));
+        Object raw = evalRaw(model, evalContext);
+        String eval = XPathFuncExpr.toString(raw);
+        return eval;
     }
 
     public List<TreeReference> evalNodeset (DataInstance model, EvaluationContext evalContext) {
