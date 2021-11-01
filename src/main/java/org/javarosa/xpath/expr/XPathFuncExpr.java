@@ -763,7 +763,7 @@ public class XPathFuncExpr extends XPathExpression {
         } else if (o instanceof Date) {
             //For 637
             val = false ? DateUtils.formatDate((Date) o, DateUtils.FORMAT_ISO8601)
-                    : DateUtils.formatDateTime((Date) o, DateUtils.FORMAT_TIMESTAMP_HTTP);
+                    : DateUtils.formatDateTime((Date) o, DateUtils.FORMAT_ISO8601);
         } else if (o instanceof IExprDataType) {
             val = ((IExprDataType) o).toString();
         }
