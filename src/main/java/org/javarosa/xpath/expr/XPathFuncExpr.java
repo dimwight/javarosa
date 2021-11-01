@@ -62,6 +62,7 @@ import org.joda.time.DateTime;
  * @author Drew Roos
  */
 public class XPathFuncExpr extends XPathExpression {
+    private static final boolean DT_637 = false;
     public XPathQName id;            //name of the function
     public XPathExpression[] args;    //argument list
 
@@ -700,7 +701,7 @@ public class XPathFuncExpr extends XPathExpression {
             }
         } else if (o instanceof Date) {
             //For 637
-            val = false ? (double) DateUtils.daysSinceEpoch((Date) o)
+            val = !DT_637 ? (double) DateUtils.daysSinceEpoch((Date) o)
                     : DateUtils.fractionalDaysSinceEpoch((Date) o);
         } else if (o instanceof IExprDataType) {
             val = ((IExprDataType) o).toNumeric();
@@ -762,7 +763,7 @@ public class XPathFuncExpr extends XPathExpression {
             val = (String) o;
         } else if (o instanceof Date) {
             //For 637
-            val = false ? DateUtils.formatDate((Date) o, DateUtils.FORMAT_ISO8601)
+            val = !DT_637 ? DateUtils.formatDate((Date) o, DateUtils.FORMAT_ISO8601)
                     : DateUtils.formatDateTime((Date) o, DateUtils.FORMAT_ISO8601);
         } else if (o instanceof IExprDataType) {
             val = ((IExprDataType) o).toString();
