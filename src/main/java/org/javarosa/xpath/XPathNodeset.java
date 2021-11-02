@@ -129,7 +129,8 @@ public class XPathNodeset {
         } else if (size() > 1) {
             throw new XPathTypeMismatchException("This field is repeated: \n\n" + nodeContents() + "\n\nYou may need to use the indexed-repeat() function to specify which value you want.");
         } else {
-            return getValAt(0);
+            Object o = getValAt(0);
+            return o;
         }
     }
 

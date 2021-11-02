@@ -33,7 +33,8 @@ public class XPathPathExprEval {
         DataInstance dataInstance = getDataInstance(ec, ref);
         List<TreeReference> nodesetRefs = ec.expandReference(ref);
         removeIrrelevantNodesets(dataInstance, nodesetRefs);
-        return new XPathNodeset(nodesetRefs, dataInstance, ec);
+        XPathNodeset nodeset = new XPathNodeset(nodesetRefs, dataInstance, ec);
+        return nodeset;
     }
 
     /** Removes irrelevant nodesets, to fix conditions based on non-relevant data */
