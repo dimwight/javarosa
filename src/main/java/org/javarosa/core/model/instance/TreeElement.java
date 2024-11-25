@@ -369,7 +369,17 @@ import java.util.List;
 
         return newNode;
     }
+    //For #4059 fix
+    public TreeElement deepCopyForRepeat() {
+        TreeElement newNode = shallowCopy();
 
+        newNode.children.clear();
+        for (TreeElement child : children) {
+            child.setMult(TreeReference.DEFAULT_MULTIPLICITY);
+            newNode.addChild(child.deepCopyForRepeat());
+        }
+        return newNode;
+    }
     /* ==== MODEL PROPERTIES ==== */
 
     // factoring inheritance rules
