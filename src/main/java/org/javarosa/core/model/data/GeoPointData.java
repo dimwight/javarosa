@@ -48,7 +48,7 @@ public class GeoPointData implements IAnswerData, IExprDataType {
     // value to be reported if we never captured a datapoint
     public static final double NO_ACCURACY_VALUE = 9999999.0;
 
-    private final double[] gp = new double[4+1];//#6136
+    private final double[] gp = new double[4]; // #6136 +1
     private int len = REQUIRED_ARRAY_SIZE;
 
 
