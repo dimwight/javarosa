@@ -124,6 +124,7 @@ import java.util.List;
         this.multiplicity = multiplicity;
         this.parent = null;
         attributes = new ArrayList<TreeElement>(0);
+        System.out.println("6136B: " + name+", "+multiplicity);
     }
 
     public TreeElement(String name, int multiplicity, boolean isPartial) {
@@ -303,6 +304,7 @@ import java.util.List;
         child.setRelevant(isRelevant(), true);
         child.setEnabled(isEnabled(), true);
         child.setInstanceName(getInstanceName());
+        System.out.println("6136B: " + name+" : "+child.name);
     }
 
     public void removeChild(TreeElement child) {
@@ -614,6 +616,7 @@ import java.util.List;
 
     public void setAttribute(String namespace, String name, String value) {
         setAttribute(this, attributes, namespace, name, value);
+        System.out.println("6136B: " + this.name+" :: "+name);
     }
 
     /* ==== SERIALIZATION ==== */
