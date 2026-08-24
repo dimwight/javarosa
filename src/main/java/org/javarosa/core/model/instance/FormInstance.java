@@ -64,8 +64,6 @@ public class FormInstance extends DataInstance<TreeElement> implements Persistab
 
     public FormInstance(TreeElement root) {
         this(root, null);
-        String treeString = root.treeString();
-        System.out.printf("R1: treeString = %s%n", treeString);
     }
 
     /**
@@ -76,6 +74,7 @@ public class FormInstance extends DataInstance<TreeElement> implements Persistab
         setID(-1);
         setFormId(-1);
         setRoot(root);
+        String treeString = root.treeString();
     }
 
     public TreeElement getBase() {
@@ -101,6 +100,7 @@ public class FormInstance extends DataInstance<TreeElement> implements Persistab
             root.setInstanceName(topLevel.getInstanceName());
             root.addChild(topLevel);
         }
+        String treeString = root.treeString();
     }
 
     public TreeReference copyNode(TreeReference from, TreeReference to) throws InvalidReferenceException {
@@ -315,6 +315,8 @@ public class FormInstance extends DataInstance<TreeElement> implements Persistab
         dateSaved = (Date) ExtUtil.read(in, new ExtWrapNullable(Date.class), pf);
         namespaces = (HashMap<String,Object>)ExtUtil.read(in, new ExtWrapMap(String.class, String.class));
         setRoot((TreeElement) ExtUtil.read(in, TreeElement.class, pf));
+        String treeString = root.treeString();
+        System.out.printf("R1: treeString = %s%n", treeString);
     }
 
     public void writeExternal(DataOutputStream out) throws IOException {

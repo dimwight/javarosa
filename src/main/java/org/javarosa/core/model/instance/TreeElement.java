@@ -117,7 +117,12 @@ import java.util.function.Consumer;
     }
 
     public String treeString() {
-        StringBuilder sb = new StringBuilder(this.name);
+        StringBuilder sb = new StringBuilder(
+            "<"+
+                (name==null?"":name) +
+                (value==null?"":"="+value)
+                +">"
+        );
         children.iterator().forEachRemaining(new Consumer<TreeElement>() {
             @Override
             public void accept(TreeElement treeElement) {
@@ -763,6 +768,7 @@ import java.util.function.Consumer;
     //  there's a lot of error checking we could do on the received instance, but it's
     //  easier to just ignore the parts that are incorrect
     public void populate(TreeElement incoming, FormDef f) {
+        String treeString = incoming.treeString();
         if (this.isLeaf()) {
             // check that incoming doesn't have children?
 

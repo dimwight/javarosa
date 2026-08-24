@@ -269,6 +269,7 @@ public class FormDef implements IFormElement, Localizable, Persistable, IMetaDat
         resetEvaluationContext();
 
         mainInstance = fi;
+        String treeString = mainInstance.getRoot().treeString();
         fi.setFormId(getID());
 
         // construct the references in all the question itemsets
@@ -280,6 +281,7 @@ public class FormDef implements IFormElement, Localizable, Persistable, IMetaDat
     }
 
     public FormInstance getMainInstance() {
+        String treeString = mainInstance.getRoot().treeString();
         return mainInstance;
     }
 
@@ -408,8 +410,9 @@ public class FormDef implements IFormElement, Localizable, Persistable, IMetaDat
         boolean valueChanged = !objectEquals(answerDataSerializer.serializeAnswerData(oldValue),
             answerDataSerializer.serializeAnswerData(data));
 
+        String treeString = mainInstance.getRoot().treeString();
         setAnswer(data, node);
-
+        treeString = mainInstance.getRoot().treeString();
         QuestionDef currentQuestion = findQuestionByRef(ref, this);
 
         Collection<QuickTriggerable> qts = triggerTriggerables(ref);
@@ -993,7 +996,10 @@ public class FormDef implements IFormElement, Localizable, Persistable, IMetaDat
         setTitle((String) ExtUtil.read(dis, new ExtWrapNullable(String.class), pf));
         setChildren((List<IFormElement>) ExtUtil.read(dis, new ExtWrapListPoly(), pf));
         setFormXmlPath(ExtUtil.nullIfEmpty(ExtUtil.readString(dis)));
-        setInstance((FormInstance) ExtUtil.read(dis, FormInstance.class, pf));
+        FormInstance formInstance = (FormInstance) ExtUtil.read(dis, FormInstance.class, pf);
+        String treeString = formInstance.getRoot().treeString();
+        setInstance(formInstance);
+        treeString = mainInstance.getRoot().treeString();
 
         // FormInstanceParser.parseInstance is responsible for initial creation of instances. It explicitly sets the
         // instance name to null so we force this again on deserialization because some code paths rely on the main
@@ -1037,6 +1043,7 @@ public class FormDef implements IFormElement, Localizable, Persistable, IMetaDat
         elementsWithActionTriggeredByToplevelEvent = getElementsFromReferences(treeReferencesWithActions);
 
         extras = (ExternalizableExtras) ExtUtil.read(dis, ExternalizableExtras.class);
+        treeString = mainInstance.getRoot().treeString();
     }
 
     /**
