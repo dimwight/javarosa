@@ -51,6 +51,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * <p>An element of a FormInstance.</p>
@@ -113,6 +114,17 @@ import java.util.List;
      */
     public TreeElement() {
         this(null, TreeReference.DEFAULT_MULTIPLICITY);
+    }
+
+    public String treeString() {
+        StringBuilder sb = new StringBuilder(this.name);
+        children.iterator().forEachRemaining(new Consumer<TreeElement>() {
+            @Override
+            public void accept(TreeElement treeElement) {
+                sb.append(treeElement.treeString());
+            }
+        });
+        return sb.toString();
     }
 
     public TreeElement(String name) {
@@ -1163,4 +1175,18 @@ import java.util.List;
             isPartial = false;
         }
     }
-}
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

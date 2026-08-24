@@ -60,8 +60,12 @@ public class FormInstance extends DataInstance<TreeElement> implements Persistab
 
     }
 
+
+
     public FormInstance(TreeElement root) {
         this(root, null);
+        String treeString = root.treeString();
+        System.out.printf("R1: treeString = %s%n", treeString);
     }
 
     /**
