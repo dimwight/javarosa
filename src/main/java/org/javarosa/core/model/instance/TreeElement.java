@@ -117,7 +117,9 @@ import java.util.function.Consumer;
     }
 
     public String treeString() {
-        StringBuilder sb = new StringBuilder(this.name);
+        StringBuilder sb = new StringBuilder(
+            "<"+ (name==null?"":name) +">"
+        );
         children.iterator().forEachRemaining(new Consumer<TreeElement>() {
             @Override
             public void accept(TreeElement treeElement) {

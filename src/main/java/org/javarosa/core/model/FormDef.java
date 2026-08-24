@@ -993,7 +993,9 @@ public class FormDef implements IFormElement, Localizable, Persistable, IMetaDat
         setTitle((String) ExtUtil.read(dis, new ExtWrapNullable(String.class), pf));
         setChildren((List<IFormElement>) ExtUtil.read(dis, new ExtWrapListPoly(), pf));
         setFormXmlPath(ExtUtil.nullIfEmpty(ExtUtil.readString(dis)));
-        setInstance((FormInstance) ExtUtil.read(dis, FormInstance.class, pf));
+        FormInstance formInstance = (FormInstance) ExtUtil.read(dis, FormInstance.class, pf);
+        String treeString = formInstance.getRoot().treeString();
+        setInstance(formInstance);
 
         // FormInstanceParser.parseInstance is responsible for initial creation of instances. It explicitly sets the
         // instance name to null so we force this again on deserialization because some code paths rely on the main
