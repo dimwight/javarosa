@@ -767,8 +767,7 @@ import java.util.function.Consumer;
     //rebuilding a node from an imported instance
     //  there's a lot of error checking we could do on the received instance, but it's
     //  easier to just ignore the parts that are incorrect
-    public void populate(TreeElement incoming, FormDef formDef) {
-        String treeString = incoming.treeString();
+    public void populate(TreeElement incoming, FormDef f) {
         if (this.isLeaf()) {
             // check that incoming doesn't have children?
 
@@ -786,8 +785,7 @@ import java.util.function.Consumer;
                 if (answerResolver == null) {
                     answerResolver = new DefaultAnswerResolver();
                 }
-                IAnswerData answerData = answerResolver.resolveAnswer(textVal, this, formDef);
-                this.setValue(answerData);
+                this.setValue(answerResolver.resolveAnswer(textVal, this, f));
             }
         } else {
             List<String> names = new ArrayList<String>(this.getNumChildren());
@@ -844,7 +842,7 @@ import java.util.function.Consumer;
                         TreeElement newChild = child.deepCopy(true);
                         newChild.setMult(k);
                         this.children.add(i + k + 1, newChild);
-                        newChild.populate(newChildren.get(k), formDef);
+                        newChild.populate(newChildren.get(k), f);
                     }
                     i += newChildren.size();
                 } else {
@@ -852,7 +850,7 @@ import java.util.function.Consumer;
                     if (newChildren.size() == 0) {
                         child.setRelevant(false);
                     } else {
-                        child.populate(newChildren.get(0), formDef);
+                        child.populate(newChildren.get(0), f);
                     }
                 }
             }
@@ -1182,7 +1180,7 @@ import java.util.function.Consumer;
             isPartial = false;
         }
     }
- }
+}
 
 
 
