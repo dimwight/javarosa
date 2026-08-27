@@ -767,7 +767,7 @@ import java.util.function.Consumer;
     //rebuilding a node from an imported instance
     //  there's a lot of error checking we could do on the received instance, but it's
     //  easier to just ignore the parts that are incorrect
-    public void populate(TreeElement incoming, FormDef f) {
+    public void populate(TreeElement incoming, FormDef formDef) {
         String treeString = incoming.treeString();
         if (this.isLeaf()) {
             // check that incoming doesn't have children?
@@ -783,10 +783,11 @@ import java.util.function.Consumer;
 
                 // if there is no other IAnswerResolver, use the default one.
                 IAnswerResolver answerResolver = XFormParser.getAnswerResolver();
-                if (answerResolver == null) {
-                    answerResolver = new DefaultAnswerResolver();
+                if (answerResolver != null) {
+                    throw new RuntimeException("answerResolver != null");
                 }
-                this.setValue(answerResolver.resolveAnswer(textVal, this, f));
+                IAnswerData answerData = new DefaultAnswerResolver().resolveAnswer(textVal, this, formDef);
+                this.setValue(answerData);
             }
         } else {
             List<String> names = new ArrayList<String>(this.getNumChildren());
@@ -843,7 +844,7 @@ import java.util.function.Consumer;
                         TreeElement newChild = child.deepCopy(true);
                         newChild.setMult(k);
                         this.children.add(i + k + 1, newChild);
-                        newChild.populate(newChildren.get(k), f);
+                        newChild.populate(newChildren.get(k), formDef);
                     }
                     i += newChildren.size();
                 } else {
@@ -851,7 +852,7 @@ import java.util.function.Consumer;
                     if (newChildren.size() == 0) {
                         child.setRelevant(false);
                     } else {
-                        child.populate(newChildren.get(0), f);
+                        child.populate(newChildren.get(0), formDef);
                     }
                 }
             }
