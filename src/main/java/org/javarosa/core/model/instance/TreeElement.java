@@ -783,10 +783,10 @@ import java.util.function.Consumer;
 
                 // if there is no other IAnswerResolver, use the default one.
                 IAnswerResolver answerResolver = XFormParser.getAnswerResolver();
-                if (answerResolver != null) {
-                    throw new RuntimeException("answerResolver != null");
+                if (answerResolver == null) {
+                    answerResolver = new DefaultAnswerResolver();
                 }
-                IAnswerData answerData = new DefaultAnswerResolver().resolveAnswer(textVal, this, formDef);
+                IAnswerData answerData = answerResolver.resolveAnswer(textVal, this, formDef);
                 this.setValue(answerData);
             }
         } else {
