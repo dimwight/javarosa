@@ -18,11 +18,14 @@ package org.javarosa.core.model.util.restorable;
 
 import static org.javarosa.core.model.DataType.from;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import org.javarosa.core.model.Constants;
+import org.javarosa.core.model.FormDef;
 import org.javarosa.core.model.condition.EvaluationContext;
+import org.javarosa.core.model.condition.IConditionExpr;
 import org.javarosa.core.model.data.DateData;
 import org.javarosa.core.model.data.DateTimeData;
 import org.javarosa.core.model.data.DecimalData;
@@ -39,14 +42,50 @@ import org.javarosa.core.services.storage.IStorageIterator;
 import org.javarosa.core.services.storage.IStorageUtility;
 import org.javarosa.core.services.storage.Persistable;
 import org.javarosa.core.services.transport.payload.ByteArrayPayload;
+import org.javarosa.core.services.transport.payload.IDataPayload;
 import org.javarosa.core.util.externalizable.Externalizable;
 import org.javarosa.core.util.externalizable.PrototypeFactory;
+import org.javarosa.model.xform.XFormSerializingVisitor;
+import org.javarosa.model.xform.XPathReference;
+import org.javarosa.xform.parse.XFormParser;
+import org.javarosa.xform.util.XFormAnswerDataParser;
+import org.javarosa.xform.util.XFormAnswerDataSerializer;
+import org.javarosa.xpath.XPathConditional;
+import org.javarosa.xpath.expr.XPathPathExpr;
 
 public class RestoreUtils {
     public static final String RECORD_ID_TAG = "rec-id";
 
-    public static IXFormyFactory xfFact;
+    public static IXFormyFactory xfFact = new IXFormyFactory () {
+        public TreeReference ref (String refStr) {
+            return FormInstance.unpackReference(new XPathReference(refStr));
+        }
 
+        public IDataPayload serializeInstance (FormInstance dm) {
+            try {
+                return (new XFormSerializingVisitor()).createSerializedPayload(dm);
+            } catch (IOException e) {
+                return null;
+            }
+        }
+
+        public FormInstance parseRestore(byte[] data, Class restorableType) {
+            return XFormParser.restoreDataModel(data, restorableType);
+        }
+
+        public IAnswerData parseData (String textVal, int dataType, TreeReference ref, FormDef f) {
+            return XFormAnswerDataParser.getAnswerData(textVal, dataType, XFormParser.ghettoGetQuestionDef(dataType, f, ref));
+        }
+
+        public String serializeData(IAnswerData data) {
+            return (String)(new XFormAnswerDataSerializer().serializeAnswerData(data));
+        }
+
+        public IConditionExpr refToPathExpr(TreeReference ref) {
+            return new XPathConditional(XPathPathExpr.fromRef(ref));
+        }
+    };
+    
     public static TreeReference ref (String refStr) {
         return xfFact.ref(refStr);
     }
