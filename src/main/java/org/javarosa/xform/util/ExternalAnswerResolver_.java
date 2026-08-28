@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
  * Date: 17/05/13
  * Time: 16:51
  */
-public class ExternalAnswerResolver extends DefaultAnswerResolver {
+public class ExternalAnswerResolver_ extends DefaultAnswerResolver {
     public static final String ExternalDataHandlerSearchHANDLER_NAME = "search";
     public static final Pattern ExternalDataUtilSEARCH_FUNCTION_REGEX = Pattern.compile("search\\(.+\\)");
 

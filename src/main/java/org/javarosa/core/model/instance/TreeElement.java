@@ -1033,6 +1033,7 @@ import java.util.function.Consumer;
     }
 
     public String toString() {
+        if (true)return treeString();
         String name = "NULL";
         if (this.name != null) {
             name = this.name;

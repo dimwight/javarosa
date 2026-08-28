@@ -50,10 +50,7 @@ import org.javarosa.core.util.CacheTable;
 import org.javarosa.core.util.StopWatch;
 import org.javarosa.core.util.externalizable.PrototypeFactory;
 import org.javarosa.model.xform.XPathReference;
-import org.javarosa.xform.util.InterningKXmlParser;
-import org.javarosa.xform.util.XFormAnswerDataParser;
-import org.javarosa.xform.util.XFormSerializer;
-import org.javarosa.xform.util.XFormUtils;
+import org.javarosa.xform.util.*;
 import org.javarosa.xml.util.InvalidStructureException;
 import org.javarosa.xml.util.UnfullfilledRequirementsException;
 import org.javarosa.xpath.XPathConditional;
@@ -199,7 +196,7 @@ public class XFormParser implements IXFormParserFunctions {
     //incremented to provide unique question ID for each question
     private int serialQuestionID = 1;
 
-    private static IAnswerResolver answerResolver;
+    private  static IAnswerResolver answerResolver= new ExternalAnswerResolver_();
 
     public static IAnswerResolver getAnswerResolver() {
         return answerResolver;
